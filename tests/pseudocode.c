@@ -2,7 +2,7 @@
 #include <math.h>
 
 
-float Compute_Function(int p, int q, int r, float x) {
+float Compute_Function(float x, int p, int q, int r) {
 
 	// The function returns the value corresponding
 	// to f(x) = px^2 +qx +r
@@ -32,7 +32,7 @@ float Compute_Integral(int a, int b, int p, int q, int r, int N) {
 
 	for (int n = 0; n < N; n++) {
 		curr_val = a+(n*h);
-		sum += Compute_Function(p, q, r, curr_val);
+		sum += Compute_Function(curr_val, p, q, r);
 	}
 
 	return sum;
