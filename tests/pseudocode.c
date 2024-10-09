@@ -16,7 +16,7 @@ float Compute_Integral(int a, int b, int p, int q, int r, int N) {
 
 	// h = (b-a)/N    N-1
 	// integral = h * SUM(f(a + n*h))
-	// 		  n=0
+	//                n=0
 
 	// N is the number of values to take between a and b.
 	// N=1000 used.
