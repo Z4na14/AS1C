@@ -1,8 +1,26 @@
 .text
 
+main:
+		
+    li a0 0
+    li a1 10
+    li a2 5
+    li a3 3
+    li a4 2
+    li a5 10
+    
+    jal ra Compute_Integral
+
+    li a7 2
+    ecall
+    
+    li a7 10
+    ecall
+
+
 Compute_Integral:
 
-	li s11 0
+    li s11 0
     fcvt.s.w fs0 s11
     fcvt.s.w fs1 s11
     fcvt.s.w fs2 s11
@@ -55,10 +73,13 @@ loop: beq s1 s0 end
         lb s0 28(sp)           # loading 'n'
 
         fadd.s fs1 fs1 fa0
+        addi s0 s0 1
 
         j loop
 
-end: jr ra
+end: 	fmv.s fa0 fs1
+		addi sp sp 36
+		jr ra
 
 Compute_Function:
 
