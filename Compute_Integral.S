@@ -1,28 +1,12 @@
-Compute_Function:
-
-    mv fs0 fa0            # Save x and use it as parameter for pow
-    fcvt.s.w fs1 a0       # p
-    fcvt.s.w fs2 a1       # q
-    fcvt.s.w fs3 a2       # r
-
-    li a0 2               # Call the pow function
-    addi sp sp -4
-    sw ra 0(sp)           # Storing previous return address
-    jal ra pow
-    lw ra 0(sp)
-    addi sp sp 4
-
-    fmul.s fa0 fa0 fs1    # p * pow(x, 2)
-    fmul.s fs2 fs2 fs0    # q * x
-
-    # Add everything up
-    fadd.s fa0 fa0 fs2
-    fadd.s fa0 fa0 fs3
-
-    jr ra                 # Return everything
-
+.text
 
 Compute_Integral:
+
+	li s11 0
+    fcvt.s.w fs0 s11
+    fcvt.s.w fs1 s11
+    fcvt.s.w fs2 s11
+    fcvt.s.w fs3 s11
 
     # First we save all the used parameters
     # As b is only used at the beginning,
@@ -39,7 +23,6 @@ Compute_Integral:
     fcvt.s.w fs3 a5       # Save N into floating register
     fdiv.s fs0 fs0 fs3    # to perform operation
 
-    li fs1 0.0
     fcvt.s.w fs2 a0       # We store 'a' in fs2 for arithmetics
 
     li s0 0               # Declaring 'n'
@@ -75,4 +58,27 @@ loop: beq s1 s0 end
 
         j loop
 
-    end: jr ra
+end: jr ra
+
+Compute_Function:
+
+    fmv.s fs0 fa0            # Save x and use it as parameter for pow
+    fcvt.s.w fs1 a0       # p
+    fcvt.s.w fs2 a1       # q
+    fcvt.s.w fs3 a2       # r
+
+    li a0 2               # Call the pow function
+    addi sp sp -4
+    sw ra 0(sp)           # Storing previous return address
+    jal ra pow
+    lw ra 0(sp)
+    addi sp sp 4
+
+    fmul.s fa0 fa0 fs1    # p * pow(x, 2)
+    fmul.s fs2 fs2 fs0    # q * x
+
+    # Add everything up
+    fadd.s fa0 fa0 fs2
+    fadd.s fa0 fa0 fs3
+
+    jr ra                 # Return everything
