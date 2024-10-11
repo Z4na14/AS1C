@@ -38,9 +38,3 @@ float Compute_Integral(int a, int b, int p, int q, int r, int N) {
 	return sum;
 }
 
-void main() {
-
-	printf("%f\n", Compute_Integral(0, 10, 5, 3, 2, 1000));
-}
-
-
