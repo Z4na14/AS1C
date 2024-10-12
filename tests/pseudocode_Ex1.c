@@ -8,6 +8,11 @@ float Compute_Function(float x, int p, int q, int r) {
 	// to f(x) = px^2 +qx +r
 	
 	float result = (p*pow(x, 2.0)) + (q*x) + r;
+
+  if (result < 0) {
+    result = (0-result);
+  }
+
 	return result;
 	
 }
@@ -36,7 +41,7 @@ float Compute_Integral(int a, int b, int p, int q, int r, int N) {
 	}
 
   sum *= h;
-  // printf("h:%f, sum:%f, i:%d, j:%d\n", h, sum, a, b);
+  printf("h:%f, sum:%f, i:%d, j:%d", h, sum, a, b);
 
 	return sum;
 }

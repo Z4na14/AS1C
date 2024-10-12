@@ -22,7 +22,8 @@ void Integral_Matrix(float *matrix, int M, int p, int q, int r) {
 
     for (int i = 0; i<M-1; i++) {
         for (int j = i+1; j<M; j++) {
-            *(matrix+(i*M)+j) = (float) Compute_Integral(i, j, p, q, r, 1000);
+           *(matrix+((i*M)+j)) = (float) Compute_Integral(i, j, p, q, r, 1000);
+            printf(" Value stored in matrix: %f\n", *(matrix+((i*M)+j)));
     }
   }
 }

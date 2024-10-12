@@ -3,19 +3,29 @@
 #include <stdio.h>
 
 
-void main() {
+void test_Program(float *matrix, int M, int p, int q, int r) {
 
-    float integrals[100][100];
-    Integral_Matrix((float *)integrals, 20, 5, 3, 2);
+    Integral_Matrix(matrix, M, p, q, r);
 
-    for (int i = 0; i<100; i++) {
+    for (int i = 0; i<M-1; i++) {
         printf("\n");
 
-        for (int j = 0; j<i; j++) {
+        for (int j = i+1; j<M; j++) {
 
-            printf("%f ", integrals[i][j]);
+            printf("%f ", *(matrix+((i*M)+j)));
         }
     }
 
     printf("\n");
+}
+
+void main() {
+
+    int size = 20;
+    float matrix1[size][size];
+
+    test_Program(&matrix1[0][0], size, 5, 3, 2);
+    test_Program(&matrix1[0][0], size, -20, 8, 10);
+    test_Program(&matrix1[0][0], size, 1, 10, -5);
+    test_Program(&matrix1[0][0], size, 0, 2, 0);
 }
