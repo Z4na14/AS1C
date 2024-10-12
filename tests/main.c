@@ -6,7 +6,7 @@
 void main() {
 
     float integrals[100][100];
-    Integral_Matrix(integrals, 100, 5, 3, 2);
+    Integral_Matrix((float *)integrals, 20, 5, 3, 2);
 
     for (int i = 0; i<100; i++) {
         printf("\n");
@@ -14,6 +14,8 @@ void main() {
         for (int j = 0; j<i; j++) {
 
             printf("%f ", integrals[i][j]);
+        }
     }
-  }
+
+    printf("\n");
 }
