@@ -1,19 +1,20 @@
+.data
+	
+    Matrix: .zero 100    # 5x5 matrix
+    size: .word 5
+
 .text
 
 main:
 
-    li a0 0
-    li a1 10
+    la a0 Matrix
+    la a1 size
+    lw a1 0(a1)
     li a2 5
     li a3 3
     li a4 2
-    li a5 10
 
-    jal ra Compute_Integral
-
-    li a7 2
-    ecall
+    jal ra Integral_Matrix
 
     li a7 10
     ecall
-

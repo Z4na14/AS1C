@@ -1,5 +1,3 @@
-.text
-
 Compute_Integral:
 
     li s11 0
@@ -59,7 +57,8 @@ loop: beq s1 s0 end
 
         j loop
 
-end: 	fmv.s fa0 fs1
-		addi sp sp 36
-		jr ra
+end: fmv.s fa0 fs1            # Passing sum to return register
+	   fmul.s fa0 fa0 fs0       # Multiplying by 'h' the last value (Aproximation)
+     addi sp sp 36
+     jr ra
 

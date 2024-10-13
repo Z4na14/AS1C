@@ -1,6 +1,6 @@
 Compute_Function:
 
-    fmv.s fs0 fa0            # Save x and use it as parameter for pow
+    fmv.s fs0 fa0         # Save x and use it as parameter for pow
     fcvt.s.w fs1 a0       # p
     fcvt.s.w fs2 a1       # q
     fcvt.s.w fs3 a2       # r
@@ -19,4 +19,7 @@ Compute_Function:
     fadd.s fa0 fa0 fs2
     fadd.s fa0 fa0 fs3
 
-    jr ra                 # Return everything
+    fabs.s fa0 fa0        # Get positive val from the result
+
+	  jr ra                 # Return everything
+
