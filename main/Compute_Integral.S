@@ -1,64 +1,76 @@
 Compute_Integral:
 
-    li s11 0
-    fcvt.s.w fs0 s11
-    fcvt.s.w fs1 s11
-    fcvt.s.w fs2 s11
-    fcvt.s.w fs3 s11
+    # Saving values
+    addi sp sp -40
+    
+    sw ra 0(sp)
+    fsw fs0 4(sp)		# h
+    fsw fs1 8(sp)		# sum
+    fsw fs2 12(sp)		# Operating register
+    
+    sw s0 16(sp)		# p
+    sw s1 20(sp)	 	# q
+    sw s2 24(sp)		# r
+    sw s3 28(sp)		# N
+    sw s4 32(sp)		# n
+    sw s5 36(sp)		# a
 
-    # First we save all the used parameters
-    # As b is only used at the beginning,
-    # we don't save it
-
-    addi sp sp -36
-    sb a2 0(sp)           # p
-    sb a3 4(sp)           # q
-    sb a4 8(sp)           # r
-
-    # h = (b - a) / N
-    sub s0 a1 a0
+    # Initialize float registers
+    li s0 0
     fcvt.s.w fs0 s0
-    fcvt.s.w fs3 a5       # Save N into floating register
-    fdiv.s fs0 fs0 fs3    # to perform operation
+    fcvt.s.w fs1 s0
+    fcvt.s.w fs2 s0
+    
+    # Saving used parameters
+    mv s0 a2			# p
+    mv s1 a3			# q
+    mv s2 a4			# r
+    mv s3 a5			# N
+    li s4 0			# n
+    mv s5 a0			# a
+    
+    # Getting h
+    fcvt.s.w fs0 a1
+    fcvt.s.w fs2 a0
+    fsub.s fs0 fs0 fs2
+    fcvt.s.w fs2 a5
+    fdiv.s fs0 fs0 fs2
+ 
 
-    fcvt.s.w fs2 a0       # We store 'a' in fs2 for arithmetics
+    loop: beq s3 s4 end_lopp
 
-    li s0 0               # Declaring 'n'
-    mv s1 a5
-    sb s1 12(sp)          # Storing 'N'
-    fsw fs0 16(sp)        # Storing 'h'
-    fsw fs2 24(sp)        # Storing 'a' float
-
-loop: beq s1 s0 end
-
-        fcvt.s.w fs3 s0        # Use same register to operate with 'n'
-        fmul.s fa0 fs3 fs0
-        fadd.s fa0 fa0 fs2     # Storing x directly in argument
-
-        fsw fs1 20(sp)         # Storing sum
-        sb  s0  28(sp)         # Storing iterator 'n'
-
-
-        lb a0 0(sp)            # Loading 'p' to argument
-        lb a1 4(sp)            # Loading 'q' to argument
-        lb a2 8(sp)            # Loading 'r' to argument
-        sw ra 32(sp)           # Storing return address from first call
-        jal ra Compute_Function
-        lw ra 32(sp)           # Restoring address from first call
-
-        lb s1 12(sp)           # Loading 'N'
-        flw fs0 16(sp)         # Loading 'h'
-        flw fs1 20(sp)         # Loading sum
-        flw fs2 24(sp)         # Loading 'a'
-        lb s0 28(sp)           # loading 'n'
+    	# Loading 'x' in first argument
+      	fcvt.s.w fa0 s4
+        fmul.s fa0 fa0 fs0
+        fcvt.s.w fs2 s5
+        fadd.s fa0 fa0 fs2 
+        
+        # Loading parameters for Compute_Function
+        mv a0 s0
+        mv a1 s1
+        mv a2 s2
+    
+	      jal ra Compute_Function
 
         fadd.s fs1 fs1 fa0
-        addi s0 s0 1
 
+        addi s4 s4 1
         j loop
-
-end: fmv.s fa0 fs1            # Passing sum to return register
-	   fmul.s fa0 fa0 fs0       # Multiplying by 'h' the last value (Aproximation)
-     addi sp sp 36
-     jr ra
-
+    
+    end_lopp:	fmul.s fa0 fs1 fs0	# Multiplying by 'h' the sum
+    
+    # Loading values back again
+    lw ra 0(sp)
+    flw fs0 4(sp)		# h
+    flw fs1 8(sp)		# sum
+    flw fs2 12(sp)		# Operating register
+    
+    lw s0 16(sp)		# p
+    lw s1 20(sp)	 	# q
+    lw s2 24(sp)		# r
+    lw s3 28(sp)		# N
+    lw s4 32(sp)		# n
+    lw s5 36(sp)		# a
+    addi sp sp 40
+	
+    jr ra
