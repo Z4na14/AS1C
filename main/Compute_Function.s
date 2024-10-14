@@ -22,13 +22,13 @@ Compute_Function:
     fadd.s fa0 fa0 fs2
     fadd.s fa0 fa0 fs3
     
-    fabs.s fa0 fa0	  # Get positive val from the result
+    fabs.s fa0 fa0		  # Get positive val from the result
 
     flw fs0 0(sp)
     flw fs1 4(sp)
     flw fs2 8(sp)
     flw fs3 12(sp)
     lw ra 16(sp)
-    addi sp sp 20
+	addi sp sp 20
 
-    jr ra     		  # Return everything
+	jr ra     			  # Return everything

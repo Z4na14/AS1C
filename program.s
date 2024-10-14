@@ -1,7 +1,7 @@
 .data
-	
-    Matrix: .zero 100    # 5x5 matrix
-    size: .word 3
+
+    Matrix: .zero 80    # 5x5 matrix
+    size: .word 5
 
 .text
 
@@ -23,7 +23,7 @@ main:
 Integral_Matrix:
 
 	# Saving previous values stored before in registers
-	addi sp sp -40
+	addi sp sp -44
     
     sw s0 0(sp)			# Matrix address	
     sw s1 4(sp)			# p
@@ -35,6 +35,7 @@ Integral_Matrix:
     sw s7 28(sp)		# iter j
     sw s8 32(sp)		# Matrix bias
     sw s9 36(sp)		# Operating register
+    sw ra 40(sp)		# Return address
 
 	# Load arguments to local registers
     mv s0 a0
@@ -66,7 +67,7 @@ Integral_Matrix:
             mv a2 s1
             mv a3 s2
             mv a4 s3
-            li a5 100
+            li a5 1000
 
 			jal ra Compute_Integral
             
@@ -95,8 +96,9 @@ Integral_Matrix:
     lw s7 28(sp)		# iter j
     lw s8 32(sp)		# Matrix bias
     lw s9 36(sp)		# Operating register
+	lw ra 40(sp)		# Return address
 
-	addi sp sp 40
+	addi sp sp 44
     
     jr ra
 
