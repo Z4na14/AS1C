@@ -49,6 +49,10 @@ Integral_Matrix:
                     mv s5 s3
                     mul s5 s5 s0
                     add s5 s5 s2
+										
+					li s11 4
+					mul s5 s5 s11
+
                     add s5 s5 s4
 
                     fsw fa0 0(s5)
