@@ -4,5 +4,5 @@
 
 
 void app_main(void) {
-	printf("Hello world");
+	printf("Hello world\n");
 }
