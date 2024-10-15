@@ -1,0 +1,1 @@
+extern float Compute_Function(float x, int p, int q, int r);
