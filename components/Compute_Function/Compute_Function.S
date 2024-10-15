@@ -2,7 +2,7 @@
 	.globl Compute_Function
 	.type Compute_Function, @function
 Compute_Function:
-		
+
     addi sp, sp, -20
     fsw fs0, 0(sp)
     fsw fs1, 4(sp)
@@ -24,7 +24,7 @@ Compute_Function:
     // Add everything up
     fadd.s fa0, fa0, fs2
     fadd.s fa0, fa0, fs3
-    
+
     fabs.s fa0, fa0		  // Get positive val from the result
 
     flw fs0, 0(sp)
