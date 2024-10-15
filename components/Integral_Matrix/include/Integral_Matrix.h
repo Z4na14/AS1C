@@ -1,1 +1,1 @@
-extern void Integral_Matrix(float *matrix, int M, int p, int q, int r);
+extern void Integral_Matrix(int *matrix, int M, int p, int q, int r);

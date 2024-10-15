@@ -7,8 +7,9 @@
 void app_main(void) {
 	printf("Hello world\n");
 
-  float result = Compute_Integral(0, 10, 5, 3, 2, 1000);
+  int result = Compute_Integral(0, 500, 5, 3, 2, 100);
 
-  printf("The result is: %f\n", result);
+  printf("The result is: %d\n", result);
 
+  return;
 }

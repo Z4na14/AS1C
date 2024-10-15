@@ -4,35 +4,41 @@
 Compute_Function:
 
     addi sp, sp, -20
-    fsw fs0, 0(sp)
-    fsw fs1, 4(sp)
-    fsw fs2, 8(sp)
-    fsw fs3, 12(sp)
+    sw s0, 0(sp)
+    sw s1, 4(sp)
+    sw s2, 8(sp)
+    sw s3, 12(sp)
     sw ra, 16(sp)
 
-    fmv.s fs0, fa0         // Save x and use it as parameter for pow
-    fcvt.s.w fs1, a0       // p
-    fcvt.s.w fs2, a1       // q
-    fcvt.s.w fs3, a2       // r
+    mv s0, a0       // Save x and use it as parameter for pow
+    mv s1, a1       // p
+    mv s2, a2       // q
+    mv s3, a3       // r
 
-    li a0, 2               // Call the pow function
+    li a1, 2               // Call the pow function
     jal ra, pow
 
-    fmul.s fa0, fs1, fa0    // p * pow(x, 2)
-    fmul.s fs2, fs2, fs0    // q * x
+    mul a0, s1, a0    // p * pow(x, 2)
+    mul s2, s2, s0    // q * x
 
     // Add everything up
-    fadd.s fa0, fa0, fs2
-    fadd.s fa0, fa0, fs3
+    add a0, a0, s2
+    add a0, a0, s3
 
-    fabs.s fa0, fa0		  // Get positive val from the result
+    blt a0, zero, .L_abs_val   // Get positive val from the result
+    .L_continue_abs:
 
-    flw fs0, 0(sp)
-    flw fs1, 4(sp)
-    flw fs2, 8(sp)
-    flw fs3, 12(sp)
+    lw s0, 0(sp)
+    lw s1, 4(sp)
+    lw s2, 8(sp)
+    lw s3, 12(sp)
     lw ra, 16(sp)
 	  addi sp, sp, 20
 
 	  jr ra     // Return everything
+
+
+
+    .L_abs_val: neg a0, a0
+                j .L_continue_abs
 
