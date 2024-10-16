@@ -1,10 +1,10 @@
 	.section .text
-  .globl Integral_Matrix
+  	.globl Integral_Matrix
 	.type Integral_Matrix, @function
 Integral_Matrix:
 
-	  // Saving previous values stored before in registers
-	  addi sp, sp, -44
+    // Saving previous values stored before in registers
+    addi sp, sp, -44
 
     sw s0, 0(sp)      // Matrix address
     sw s1, 4(sp)      // p
@@ -12,13 +12,13 @@ Integral_Matrix:
     sw s3, 12(sp)     // r
     sw s4, 16(sp)     // i
     sw s5, 20(sp)     // j
-	  sw s6, 24(sp)     // iter i
+    sw s6, 24(sp)     // iter i
     sw s7, 28(sp)     // iter j
     sw s8, 32(sp)     // Matrix bias
     sw s9, 36(sp)     // Operating register
     sw ra, 40(sp)     // Return address
 
-	  // Load arguments to local registers
+    // Load arguments to local registers
     mv s0, a0
     mv s1, a2
     mv s2, a3
@@ -42,15 +42,15 @@ Integral_Matrix:
                   addi s5, s5, 1
                   beq s5, s7, .L_iter_loop
 
-			            // Preparing parameters for function
-			            mv a0, s4
+		  // Preparing parameters for function
+		  mv a0, s4
                   mv a1, s5
                   mv a2, s1
                   mv a3, s2
                   mv a4, s3
-                  li a5, 1000
+                  li a5, 1
 
-			            jal ra, Compute_Integral
+		  jal ra, Compute_Integral
 
                   // Calculating the bias where to store the integral value
                   mv s8, s7
@@ -60,9 +60,9 @@ Integral_Matrix:
                   mul s8, s8, s9
                   add s8, s8, s0
 
-			            sw a0, 0(s8)
+		  sw a0, 0(s8)
 
-			            j .L_outer_loop
+                  j .L_outer_loop
 
 
       .L_exit_loop:
@@ -73,11 +73,11 @@ Integral_Matrix:
       lw s3, 12(sp)     // r
       lw s4, 16(sp)     // i
       lw s5, 20(sp)     // j
-	    lw s6, 24(sp)     // iter i
+      lw s6, 24(sp)     // iter i
       lw s7, 28(sp)     // iter j
       lw s8, 32(sp)     // Matrix bias
       lw s9, 36(sp)     // Operating register
-	    lw ra, 40(sp)     // Return address
+      lw ra, 40(sp)     // Return address
 
       addi sp, sp, 44
 

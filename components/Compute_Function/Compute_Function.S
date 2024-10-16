@@ -33,9 +33,9 @@ Compute_Function:
     lw s2, 8(sp)
     lw s3, 12(sp)
     lw ra, 16(sp)
-	  addi sp, sp, 20
+    addi sp, sp, 20
 
-	  jr ra     // Return everything
+    jr ra     // Return everything
 
 
 

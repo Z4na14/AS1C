@@ -18,7 +18,7 @@ void app_main(void) {
 
   start = clock();
 
-  int size = 10;
+  int size = 20;
   int values_integral[size][size];
   Integral_Matrix(&values_integral[0][0], size, 5, 3, 2);
 
@@ -34,7 +34,7 @@ void app_main(void) {
 
     for (int j = i+1; j<size; j++) {
 
-      printf("%d", values_integral[i][j]);
+      printf("%d ", values_integral[i][j]);
     }
   }
 

@@ -3,8 +3,8 @@
 	.type Compute_Integral, @function
 Compute_Integral:
 
-	  // Saving values
-	  addi sp, sp, -36
+    // Saving values
+    addi sp, sp, -36
 
     sw ra, 0(sp)
     sw s6, 4(sp)        // h
@@ -22,7 +22,7 @@ Compute_Integral:
     mv s1, a3           // q
     mv s2, a4           // r
     mv s3, a5           // N
-	  li s4, 0            // n
+    li s4, 0            // n
     mv s5, a0           // a
     li s6, 0            // h
     li s7, 0            // sum
@@ -33,7 +33,7 @@ Compute_Integral:
 
     .L_loop: beq s3, s4, .L_end_loop
 
-    	  // Loading 'x' in first argument
+        // Loading 'x' in first argument
         mul a0, s4, s6
         add a0, a0, s5
 
