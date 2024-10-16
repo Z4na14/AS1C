@@ -1,1 +1,1 @@
-extern float pow(float base, int exp);
+extern int pow(int base, int exp);
