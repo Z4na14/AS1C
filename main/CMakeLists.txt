@@ -1,2 +1,2 @@
-idf_component_register(SRCS "main.S"
+idf_component_register(SRCS "main.c"
 							"factorialMatrix.S")
