@@ -20,6 +20,49 @@
 
 main:
 
+	# Tests for Compute_Integral
+    li a0 0
+    li a1 100
+    li a2 5
+    li a3 3
+    li a4 2
+    li a5 100
+    jal ra Compute_Integral
+    
+    li a0 0
+    li a1 -10
+    li a2 5
+    li a3 3
+    li a4 2
+    li a5 100
+    jal ra Compute_Integral
+    
+    li a0 0
+    li a1 100
+    li a2 0
+    li a3 0
+    li a4 0
+    li a5 100
+    jal ra Compute_Integral
+    
+    li a0 0
+    li a1 100
+    li a2 -324
+    li a3 34534
+    li a4 -22334
+    li a5 100
+    jal ra Compute_Integral
+    
+    li a0 0
+    li a1 100
+    li a2 5
+    li a3 3
+    li a4 2
+    li a5 -100
+    jal ra Compute_Integral
+
+
+	# Tests for Integral_Matrix
     la a0 Matrix1
     la a1 size1
     lw a1 0(a1)
@@ -167,6 +210,11 @@ Compute_Integral:
     sw s4 32(sp)		# n
     sw s5 36(sp)		# a
 
+	# Check if inputed parameters are valid
+    blt a1 a0 exception_case	# b < a
+    li s0 1
+    blt a5 s0 exception_case	# N < 1
+
 	# Initialize float registers
     li s0 0
     fcvt.s.w fs0 s0
@@ -210,6 +258,7 @@ Compute_Integral:
         j loop
     
     end_lopp:	fmul.s fa0 fs1 fs0	# Multiplying by 'h' the sum
+    continue:
     
     # Loading values back again
 	lw ra 0(sp)
@@ -226,6 +275,12 @@ Compute_Integral:
 	addi sp sp 40
 	
     jr ra
+    
+    exception_case:  
+    	# Loading 0 to return register to avoid residual values
+    	li s0 0
+    	fcvt.s.w fa0 s0	
+        j continue
 
 f:
 		

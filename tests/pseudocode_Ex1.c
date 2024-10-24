@@ -31,6 +31,10 @@ float Compute_Integral(int a, int b, int p, int q, int r, int N) {
 	// The function does not have to print anything.
 	// A function to calculate f(x) is mandatory.
 	
+	if (b < a || N < 1) {
+		return 0.0;
+	}
+
 	float h = ((float) b - (float) a) / (float) N;
 	float sum = 0.0;
 	float curr_val;
