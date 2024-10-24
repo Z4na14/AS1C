@@ -1,19 +1,63 @@
 .data
 
-    Matrix: .zero 80    # 5x5 matrix
-    size: .word 5
+    Matrix1: .zero 80    # 5x5 matrix
+    size1: .word 5
+    
+	Matrix2: .zero 4    # 1x1 matrix
+    size2: .word 1
+    
+    Matrix3: .zero 80    # 5x5 matrix
+    size3: .word 5
+    
+    Matrix4: .zero 80    # 5x5 matrix
+    size4: .word 5
+    
+    Matrix5: .zero 1    # 0x0 matrix
+    .align 2
+    size5: .word 0
 
 .text
 
 main:
 
-    la a0 Matrix
-    la a1 size
+    la a0 Matrix1
+    la a1 size1
     lw a1 0(a1)
     li a2 5
     li a3 3
     li a4 2
-
+    jal ra Integral_Matrix
+    
+    la a0 Matrix2
+    la a1 size2
+    lw a1 0(a1)
+    li a2 5
+    li a3 3
+    li a4 2
+    jal ra Integral_Matrix
+    
+    la a0 Matrix3
+    la a1 size3
+    lw a1 0(a1)
+    li a2 0
+    li a3 0
+    li a4 0
+    jal ra Integral_Matrix
+    
+    la a0 Matrix4
+    la a1 size4
+    lw a1 0(a1)
+    li a2 100
+    li a3 200
+    li a4 -500
+    jal ra Integral_Matrix
+    
+    la a0 Matrix5
+    la a1 size5
+    lw a1 0(a1)
+    li a2 5
+    li a3 3
+    li a4 2
     jal ra Integral_Matrix
 
     li a7 10
@@ -36,6 +80,10 @@ Integral_Matrix:
     sw s8 32(sp)		# Matrix bias
     sw s9 36(sp)		# Operating register
     sw ra 40(sp)		# Return address
+
+	# Check if the size of the matrix is valid
+    li s0 1
+    ble a1 s0 exit_loop
 
 	# Load arguments to local registers
     mv s0 a0
@@ -67,7 +115,7 @@ Integral_Matrix:
             mv a2 s1
             mv a3 s2
             mv a4 s3
-            li a5 1000
+            li a5 100
 
 			jal ra Compute_Integral
             
@@ -149,12 +197,12 @@ Compute_Integral:
         fcvt.s.w fs2 s5
         fadd.s fa0 fa0 fs2 
         
-        # Loading parameters for Compute_Function
+        # Loading parameters for "f"
         mv a0 s0
         mv a1 s1
         mv a2 s2
     
-		jal ra Compute_Function
+		jal ra f
         
         fadd.s fs1 fs1 fa0
         
@@ -179,7 +227,7 @@ Compute_Integral:
 	
     jr ra
 
-Compute_Function:
+f:
 		
     addi sp sp -20
     fsw fs0 0(sp)

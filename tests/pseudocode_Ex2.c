@@ -20,6 +20,10 @@ void Integral_Matrix(float *matrix, int M, int p, int q, int r) {
     The same function used in the last exercise will be used.
     */
 
+	if (M <= 1) {
+		return;
+	}
+
     for (int i = 0; i<M-1; i++) {
         for (int j = i+1; j<M; j++) {
            *(matrix+((i*M)+j)) = (float) Compute_Integral(i, j, p, q, r, 1000);
