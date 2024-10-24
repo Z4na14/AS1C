@@ -1,13 +1,14 @@
 
 	.data
-A: .word 1, 2, 3, 4		// values for matrix A
-B: .word 0, 0, 0, 0		// values for matrix B
-N: .word 2 				// Number of rows
-M: .word 2	 			// Number of columns
+A: .word 1, 2, 3, 4   // values for matrix A
+B: .word 0, 0, 0, 0   // values for matrix B
+N: .word 2            // Number of rows
+M: .word 2            // Number of columns
 
 
 	.section .text
 	.globl app_main
+  .type app_main, @function
 app_main:
 
 	addi sp, sp, -12
@@ -23,9 +24,9 @@ app_main:
 	lw a3, 0(t0)
 
 	// the function is executed for the first time
-	rdcycle s0
+	//rdcycle s0
 	jal ra, factorialMatrix
-	rdcycle s1
+	//rdcycle s1
 	sub s1, s1, s0
 
 	// print the number of cycles (s1)
@@ -36,9 +37,9 @@ app_main:
 	lw a2, 0(t0)
 	la t0, M
 	lw a3, 0(t0)
-	rdcycle s0
+	//rdcycle s0
 	jal ra, factorialMatrix
-	rdcycle s1
+	//rdcycle s1
 	sub s1, s1, s0
 
 	// print the number of cycles (s1)
