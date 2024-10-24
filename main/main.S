@@ -17,35 +17,45 @@ app_main:
 	sw s1, 8 (sp)
 
 	la a0, A
-	la a1, A
+	la a1, B
 	la t0, N
 	lw a2, 0(t0)
 	la t0, M
 	lw a3, 0(t0)
 
 	// the function is executed for the first time
-	//rdcycle s0
+  // https://ctrlsrc.io/posts/2023/counting-cpu-cycles-on-esp32c3-esp32c6/
+	csrw 0x7E0, 1
+  csrr s0, 0x7E2
 	jal ra, factorialMatrix
-	//rdcycle s1
+	csrr s1, 0x7E2
 	sub s1, s1, s0
+
+  mv a0, s1
+  li a7, 1
+  ecall
 
 	// print the number of cycles (s1)
 	// the function is executed a second time
 	la a0, A
-	la a1, A
+	la a1, B
 	la t0, N
 	lw a2, 0(t0)
 	la t0, M
 	lw a3, 0(t0)
-	//rdcycle s0
+	csrr s0, 0x7E2
 	jal ra, factorialMatrix
-	//rdcycle s1
+	csrr s1, 0x7E2
 	sub s1, s1, s0
+
+  mv a0, s1
+  li a7, 1
+  ecall
 
 	// print the number of cycles (s1)
 	lw ra, 0(sp)
 	lw s0, 4(sp)
-	lw s1, 8 (sp)
+	lw s1, 8(sp)
 	addi sp, sp, 12
 
 	jr ra
