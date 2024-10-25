@@ -16,6 +16,7 @@ app_main:
 	sw s0, 4(sp)
 	sw s1, 8 (sp)
 
+  sw 1, 0x306
 	la a0, A
 	la a1, B
 	la t0, N
@@ -25,10 +26,10 @@ app_main:
 
 	// the function is executed for the first time
   // https://ctrlsrc.io/posts/2023/counting-cpu-cycles-on-esp32c3-esp32c6/
-	csrw 0x7E0, 1
-  csrr s0, 0x7E2
+  // https://git.kernel.dk/cgit/fio/commit/?id=577b85ec41b5560a81a4fb09d1ec7760bcacc49f
+	lw s0, 0(0x320)
 	jal ra, factorialMatrix
-	csrr s1, 0x7E2
+	lw s1, 0(0x320)
 	sub s1, s1, s0
 
   mv a0, s1
@@ -43,9 +44,9 @@ app_main:
 	lw a2, 0(t0)
 	la t0, M
 	lw a3, 0(t0)
-	csrr s0, 0x7E2
+	lw s0, 0(0x320)
 	jal ra, factorialMatrix
-	csrr s1, 0x7E2
+	lw s1, 0(0x320)
 	sub s1, s1, s0
 
   mv a0, s1
