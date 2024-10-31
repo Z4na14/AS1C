@@ -26,12 +26,18 @@ app_main:
 	// the function is executed for the first time
 	jal ra, rdcycle
   mv s0, a0
+
 	jal ra, factorialMatrix
+
 	jal ra, rdcycle
   mv s1, a0
 	sub a0, s1, s0
+  
 
-  jal print_cycles
+  la a1, B
+  lw a2, N
+  lw a3, M
+  jal print_variables
 
 
 	// print the number of cycles (s1)
@@ -42,14 +48,23 @@ app_main:
 	lw a2, 0(t0)
 	la t0, M
 	lw a3, 0(t0)
+
+
 	jal ra, rdcycle
   mv s0, a0
-	jal ra, factorialMatrix
-	jal ra, rdcycle
+	
+  jal ra, factorialMatrix
+	
+  jal ra, rdcycle
   mv s1, a0
 	sub a0, s1, s0
+  
 
-  jal print_cycles
+  la a1, B
+  lw a2, N
+  lw a3, M
+
+  jal print_variables
 
 	// print the number of cycles (s1)
 	lw ra, 0(sp)
