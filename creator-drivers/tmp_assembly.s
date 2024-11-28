@@ -8,16 +8,21 @@
   M4: .word 4 
   M8: .word 8
   M16:.word 16
+  
+  newline: .string "\n"
 
 
 .text
 
   .globl main
   main:
-    addi sp, sp, -12
+    addi sp, sp, -24
     sw ra, 0(sp)
     sw s0, 4(sp)
     sw s1, 8(sp)
+    sw s2, 12(sp)
+    sw s3, 16(sp)
+    sw s4, 20(sp)
     
     
     la a0, Matrix4
@@ -30,8 +35,12 @@
     rdcycle s1
     sub s1, s1, s0
     # The number of cycles (s1) is to be printed here.
-    li a7, 0
+    li a7, 1
     mv a0, s1
+    ecall
+    
+    li a7, 4
+    la a0, newline
     ecall
     
     
@@ -45,8 +54,12 @@
     rdcycle s1
     sub s1, s1, s0
     # The number of cycles (s1) is to be printed here
-    li a7, 0
+    li a7, 1
     mv a0, s1
+    ecall
+    
+    li a7, 4
+    la a0, newline
     ecall
     
     
@@ -60,15 +73,22 @@
     rdcycle s1
     sub s1, s1, s0
     # The number of cycles (s1) is to be printed here
-    li a7, 0
+    li a7, 1
     mv a0, s1
+    ecall
+    
+    li a7, 4
+    la a0, newline
     ecall
     
     
     lw ra, 0(sp)
     lw s0, 4(sp)
     lw s1, 8(sp)
-    addi sp, sp, 12
+    lw s2, 12(sp)
+    lw s3, 16(sp)
+    lw s4, 20(sp)
+    addi sp, sp, 24
     jr ra
     
     
