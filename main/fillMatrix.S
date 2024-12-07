@@ -36,7 +36,7 @@ li s3, -1     // iter (j)
     ble s3, s2, .L_left_lower   // a <= b
     .L_resume_flow:
 
-    jal ra sum
+    jal ra, sum
 
     sw a0, 0(s0)
 
